@@ -6,6 +6,6 @@ Build with npm run build. Deploy the checked revision using npm run deploy -- --
 
 Cloudflare account: 88caf19a7dd4ee5d8d2fbfeb8906f86b.
 
-Supabase hosted project: jyyxkyeqlajigabqcqoj (Tokyo). Local stack: npx supabase start; npx supabase stop. Hosted database is initially empty. Never run local reset commands against hosted data. Google provider is enabled; exact callback URLs are configured. Hosted migration CLI credentials remain a release prerequisite. npm account scope is @isurutj. See SETUP-RESULT.md.
+Supabase hosted project: jyyxkyeqlajigabqcqoj (Tokyo). Local stack: npx supabase start; npx supabase stop. Hosted database is initially empty. Never run local reset commands against hosted data. Google provider is enabled; exact callback URLs are configured. Supabase CLI login and the hosted project link are verified for jyyxkyeqlajigabqcqoj. Apply only reviewed migrations; do not run local reset commands against hosted data. npm account scope is @isurutj. See SETUP-RESULT.md.
 
 The public page is a setup marker, not an implemented application. Read docs/STATUS.md before continuing.
