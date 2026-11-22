@@ -1,5 +1,7 @@
 # RepairRelay
 
+[![CI](https://github.com/ITJayasuriya/repairrelay/actions/workflows/ci.yml/badge.svg)](https://github.com/ITJayasuriya/repairrelay/actions/workflows/ci.yml)
+
 Open-source project in development. This repository currently contains the verified development foundation, not a completed product.
 
 ## Local development
@@ -21,3 +23,5 @@ Read [implementation plan](docs/IMPLEMENTATION.md), [engineering standards](docs
 ## Contributions
 
 See [CONTRIBUTING.md](CONTRIBUTING.md). Report defects with synthetic data only.
+
+[Live setup page](https://isuru-repairrelay.pages.dev) · [Delivery board](https://github.com/users/ITJayasuriya/projects/2) · [Setup results](docs/SETUP-RESULT.md)

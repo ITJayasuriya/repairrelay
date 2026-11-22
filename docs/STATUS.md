@@ -10,4 +10,4 @@ Next: M0 discovery and first vertical slice from IMPLEMENTATION.md. No product u
 
 Deferred tool integrations: unused Storybook (FormPath) and PWA tooling (RepairRelay) were removed after moderate transitive advisories. Select secure compatible versions when those milestones start.
 
-Read OPERATIONS.md for deployed setup marker and provider configuration. Do not create scheduled tasks: the owner will create them after readiness review.
+Read SETUP-RESULT.md and OPERATIONS.md for verified setup and release prerequisites. All main-branch CI checks passed on Linux including all three browser engines. Do not create scheduled tasks: the owner will create them after readiness review.
