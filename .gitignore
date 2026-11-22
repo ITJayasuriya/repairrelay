@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+playwright-report/
+test-results/
+coverage/
+.wrangler/
+.supabase/
+*.tsbuildinfo
+.DS_Store
+
+# Supabase-generated local state and credentials
+supabase/.temp/
+supabase/.branches/
