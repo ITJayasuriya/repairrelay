@@ -1,13 +1,9 @@
 # Status
 
-Stage: verified development foundation, not an implemented product.
+25 November 2026: day 1 local alpha in progress on build/local-alpha.
 
-Completed: repository skeleton, pinned dependencies, application setup marker, TypeScript/lint/format configuration, production build, Chromium smoke and axe check, three-browser CI configuration, contribution/security documents and implementation plans.
+Completed: validated demo transitions and synthetic kettle fixture; 3 domain tests passed on working tree based on 872b16a. Discovery interviews remain unavailable (issue #4). No product deployed yet.
 
-Local Firefox startup currently fails before page load with “Could not find profile folder.” Chromium and WebKit are the local readiness checks via `npm run test:e2e:local`; full `npm run test:e2e` includes Firefox and is required in Linux CI. Do not claim local Firefox passed.
+Next: atomic IndexedDB demo persistence, intake/queue/detail UI and real browser coverage. Team auth, RPC/RLS, outbox/sync/conflicts, PWA lifecycle, standard export and release/pilot gates remain open.
 
-Next: M0 discovery and first vertical slice from IMPLEMENTATION.md. No product unit tests exist yet; add meaningful domain tests with product logic.
-
-Deferred tool integrations: unused Storybook (FormPath) and PWA tooling (RepairRelay) were removed after moderate transitive advisories. Select secure compatible versions when those milestones start.
-
-Read SETUP-RESULT.md and OPERATIONS.md for verified setup and release prerequisites. All main-branch CI checks passed on Linux including all three browser engines. Do not create scheduled tasks: the owner will create them after readiness review.
+Local Firefox startup limitation remains; Chromium/WebKit are local checks and all three engines are required in Linux CI.
