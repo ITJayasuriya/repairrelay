@@ -14,3 +14,6 @@ coverage/
 # Supabase-generated local state and credentials
 supabase/.temp/
 supabase/.branches/
+
+# Atomic local automation writer guard
+.repairrelay-writer.lock/

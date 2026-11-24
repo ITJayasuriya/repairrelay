@@ -1,13 +1,35 @@
 # Status
 
-Stage: verified development foundation, not an implemented product.
+25 November 2026 — Day 1 local demo slice implemented on build/local-alpha.
+Not full M1 or v1. Daily target: four substantive commits.
 
-Completed: repository skeleton, pinned dependencies, application setup marker, TypeScript/lint/format configuration, production build, Chromium smoke and axe check, three-browser CI configuration, contribution/security documents and implementation plans.
+Delivered: anonymous intake, queue/filter, detail, simulated ownership, handoff
+notes, wait/resume, explicit outcome and JSON backup. IndexedDB commits cases
+and command journal atomically; reads validate schemas. Stale local writes fail.
+Demo never contacts Supabase. No visitor data, attachments or added packages.
 
-Local Firefox startup currently fails before page load with “Could not find profile folder.” Chromium and WebKit are the local readiness checks via `npm run test:e2e:local`; full `npm run test:e2e` includes Firefox and is required in Linux CI. Do not claim local Firefox passed.
+Validation on 6156643 plus browser-test working tree: check/build passed,
+3 domain tests and 10 Chromium/WebKit tests passed. Real IndexedDB rollback,
+retry deduplication, competing local claims, two-tab visibility, storage failure,
+refresh, disconnected edits, backup contents, keyboard and axe covered.
+Desktop/mobile screenshots inspected. See testing.md and decisions/002-day-one-review.md.
+PR #13: initial Linux CI 12/15 passed; Firefox axe crashed and Linux WebKit
+exposed a macOS-only Tab assumption. Test portability fixes awaiting CI.
+Axe is Chromium-only; workflow/storage tests remain in all three engines.
+Merge and deployment pending; see RUN-STATE.json.
+Local Firefox remains unavailable. No device/pilot/performance claims.
 
-Next: M0 discovery and first vertical slice from IMPLEMENTATION.md. No product unit tests exist yet; add meaningful domain tests with product logic.
+Next: simulated dependent outbox and lossless conflict walkthrough, bounded
+journal and backup restore; then event/member API contracts and local Supabase
+RLS/RPC tests. Independent demo is deliberately separate from team authority.
 
-Deferred tool integrations: unused Storybook (FormPath) and PWA tooling (RepairRelay) were removed after moderate transitive advisories. Select secure compatible versions when those milestones start.
+Remaining v1: organiser event/member management; OAuth/account-switch recovery;
+canonical server authorization, atomic tickets/claims, hashed idempotency,
+commit-consistent cursor/tombstones; transactional team outbox/dependencies,
+push/pull/conflict UI, real-database races/lost responses; PWA caching/update
+safety, storage recovery, ORDS version/mapping export, close-event checklist;
+accessibility/device/load audits, clean checkout, release/rollback and feedback.
 
-Read SETUP-RESULT.md and OPERATIONS.md for verified setup and release prerequisites. All main-branch CI checks passed on Linux including all three browser engines. Do not create scheduled tasks: the owner will create them after readiness review.
+Blockers: organiser/volunteer validation unavailable (issue #4); missing evidence
+is documented, not treated as software completion. Existing external PR #12
+contains placeholders and is not integrated. Deadline remains 5 January 2027.

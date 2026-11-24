@@ -1,0 +1,56 @@
+import Dexie, { liveQuery, type EntityTable } from "dexie";
+import {
+  applyDemoCommand,
+  caseSchema,
+  commandSchema,
+  type DemoCommand,
+  type RepairCase,
+} from "../domain/case";
+
+export const demoDb = new Dexie("repairrelay-demo-v1") as Dexie & {
+  cases: EntityTable<RepairCase, "id">;
+  commands: EntityTable<DemoCommand, "id">;
+};
+demoDb.version(1).stores({ cases: "id, updatedAt", commands: "id, caseId" });
+
+export function watchDemoCases(
+  next: (items: RepairCase[]) => void,
+  error: (error: unknown) => void,
+) {
+  return liveQuery(async () =>
+    (await demoDb.cases.toArray())
+      .map((item) => caseSchema.parse(item))
+      .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)),
+  ).subscribe({ next, error });
+}
+
+export async function saveDemoCommand(input: DemoCommand) {
+  const command = commandSchema.parse(input);
+  return demoDb.transaction("rw", demoDb.cases, demoDb.commands, async () => {
+    const previous = await demoDb.commands.get(command.id);
+    if (previous) {
+      if (JSON.stringify(previous) !== JSON.stringify(command))
+        throw new Error("Command identity was reused with different content.");
+      return;
+    }
+    const stored = await demoDb.cases.get(command.caseId);
+    const next = applyDemoCommand(
+      stored ? caseSchema.parse(stored) : undefined,
+      command,
+    );
+    await demoDb.cases.put(next);
+    await demoDb.commands.add(command);
+  });
+}
+
+export async function exportDemoBackup() {
+  return demoDb.transaction("r", demoDb.cases, demoDb.commands, async () => ({
+    format: "repairrelay-demo-backup",
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    cases: (await demoDb.cases.toArray()).map((item) => caseSchema.parse(item)),
+    commands: (await demoDb.commands.toArray()).map((item) =>
+      commandSchema.parse(item),
+    ),
+  }));
+}

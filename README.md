@@ -1,27 +1,25 @@
 # RepairRelay
 
-[![CI](https://github.com/ITJayasuriya/repairrelay/actions/workflows/ci.yml/badge.svg)](https://github.com/ITJayasuriya/repairrelay/actions/workflows/ci.yml)
+A mobile-first repair-event handoff tool in development. Try the independent
+[local demo](https://isuru-repairrelay.pages.dev/demo): register a synthetic item,
+claim it as the demo repairer, leave notes and record an explicit outcome.
 
-Open-source project in development. This repository currently contains the verified development foundation, not a completed product.
+The demo persists cases and its command journal transactionally in this browser.
+It needs no cloud account. Download a JSON backup before clearing browser data;
+storage can be evicted. The backup is not an Open Repair Data Standard export.
+Team mode, service-worker offline loading and sync/conflicts are not shipped yet.
+Do not enter visitor personal information. No pilot results are claimed.
 
-## Local development
+## Develop
 
-Use Node 24.21.0.
+Node 24 (`.nvmrc`), then `npm ci` and `npm run dev`. No Docker or Supabase
+credentials are needed for the demo. For tests install browser binaries with
+`npx playwright install chromium firefox webkit`.
 
-```sh
-npm ci
-npm run dev
-npm run check
-npm test
-npm run build
-npx playwright install chromium
-npm run test:e2e:local # Chromium and WebKit on this Mac; CI runs all three browsers
-```
+Run `npm run check`, `npm test`, `npm run build`, `npm run test:e2e:local`
+(Chromium/WebKit on this Mac) or `npm run test:e2e` (all engines in Linux CI).
+See [verification](docs/testing.md), [status](docs/STATUS.md),
+[implementation](docs/IMPLEMENTATION.md) and [operations](docs/OPERATIONS.md).
 
-Read [implementation plan](docs/IMPLEMENTATION.md), [engineering standards](docs/ENGINEERING.md) and [current status](docs/STATUS.md).
-
-## Contributions
-
-See [CONTRIBUTING.md](CONTRIBUTING.md). Report defects with synthetic data only.
-
-[Live setup page](https://isuru-repairrelay.pages.dev) · [Delivery board](https://github.com/users/ITJayasuriya/projects/2) · [Setup results](docs/SETUP-RESULT.md)
+MIT licensed. Contributions: read CONTRIBUTING.md and choose an open issue;
+please discuss protocol changes first.
