@@ -1,11 +1,32 @@
 # Status
 
-25 November 2026: day 1 local alpha in progress on build/local-alpha.
+25 November 2026 — Day 1 local demo slice implemented on build/local-alpha.
+Not full M1 or v1. Daily target: four substantive commits.
 
-Completed: validated demo transitions and synthetic kettle fixture; 3 domain tests passed on working tree based on 872b16a. Discovery interviews remain unavailable (issue #4). No product deployed yet.
+Delivered: anonymous intake, queue/filter, detail, simulated ownership, handoff
+notes, wait/resume, explicit outcome and JSON backup. IndexedDB commits cases
+and command journal atomically; reads validate schemas. Stale local writes fail.
+Demo never contacts Supabase. No visitor data, attachments or added packages.
 
-Atomic demo persistence implemented. Chromium/WebKit storage contracts passed: rollback, duplicate retries, payload mismatch and competing claims. Intake, queue/filter, simulated ownership, handoff notes, waiting/resume, explicit outcomes and JSON backup implemented. Desktop/mobile screenshots inspected. UI checks and production build passed; final browser suite in progress.
+Validation on 6156643 plus browser-test working tree: check/build passed,
+3 domain tests and 10 Chromium/WebKit tests passed. Real IndexedDB rollback,
+retry deduplication, competing local claims, two-tab visibility, storage failure,
+refresh, disconnected edits, backup contents, keyboard and axe covered.
+Desktop/mobile screenshots inspected. See testing.md and decisions/002-day-one-review.md.
+Linux three-engine CI, PR merge and deployment pending; see RUN-STATE.json.
+Local Firefox remains unavailable. No device/pilot/performance claims.
 
-Next: intake/queue/detail UI journey coverage and release review. Team auth, RPC/RLS, outbox/sync/conflicts, PWA lifecycle, standard export and release/pilot gates remain open.
+Next: simulated dependent outbox and lossless conflict walkthrough, bounded
+journal and backup restore; then event/member API contracts and local Supabase
+RLS/RPC tests. Independent demo is deliberately separate from team authority.
 
-Local Firefox startup limitation remains; Chromium/WebKit are local checks and all three engines are required in Linux CI.
+Remaining v1: organiser event/member management; OAuth/account-switch recovery;
+canonical server authorization, atomic tickets/claims, hashed idempotency,
+commit-consistent cursor/tombstones; transactional team outbox/dependencies,
+push/pull/conflict UI, real-database races/lost responses; PWA caching/update
+safety, storage recovery, ORDS version/mapping export, close-event checklist;
+accessibility/device/load audits, clean checkout, release/rollback and feedback.
+
+Blockers: organiser/volunteer validation unavailable (issue #4); missing evidence
+is documented, not treated as software completion. Existing external PR #12
+contains placeholders and is not integrated. Deadline remains 5 January 2027.

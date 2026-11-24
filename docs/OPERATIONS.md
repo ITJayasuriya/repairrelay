@@ -8,4 +8,4 @@ Cloudflare account: 88caf19a7dd4ee5d8d2fbfeb8906f86b.
 
 Supabase hosted project: jyyxkyeqlajigabqcqoj (Tokyo). Local stack: npx supabase start; npx supabase stop. Hosted database is initially empty. Never run local reset commands against hosted data. Google provider is enabled; exact callback URLs are configured. Supabase CLI login and the hosted project link are verified for jyyxkyeqlajigabqcqoj. Apply only reviewed migrations; do not run local reset commands against hosted data. npm account scope is @isurutj. See SETUP-RESULT.md.
 
-The public page is a setup marker, not an implemented application. Read docs/STATUS.md before continuing.
+The public demo supports local intake, queue, simulated ownership, notes and outcomes once the day-one PR is merged/deployed. It is not team mode or the full M1 alpha. Read docs/STATUS.md for actual release evidence.

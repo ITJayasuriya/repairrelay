@@ -1,24 +1,27 @@
 {
   "schema_version": 1,
   "local_date": "2026-11-25",
-  "state": "in_progress",
+  "state": "awaiting_ci",
   "planned_daily_goal": "Day 1: validated domain boundaries and persistent local intake, ownership, notes and outcome demo",
   "commit_target": 4,
   "completed_unit_ids": [
     "demo-domain",
     "atomic-demo-store",
-    "intake-to-outcome-ui"
+    "intake-to-outcome-ui",
+    "browser-coverage-review"
   ],
-  "actual_commit_shas": ["5bc18b7", "94284f1"],
+  "actual_commit_shas": ["5bc18b7", "94284f1", "6156643"],
   "branch": "build/local-alpha",
   "open_pr": null,
-  "last_tested_sha": null,
+  "last_tested_sha": "6156643 with browser tests pending commit",
   "actual_test_results": [
-    "3 domain tests passed",
-    "Chromium/WebKit storage contract: 2 passed"
+    "check passed",
+    "Vitest 3 passed",
+    "build passed",
+    "Chromium/WebKit 10 passed"
   ],
-  "next_action": "Commit browser coverage and review evidence, push PR and await required Linux CI",
+  "next_action": "Push reviewed branch, open PR, wait for quality CI then merge and deploy tested main",
   "dirty_files": [],
   "blocker": null,
-  "updated_at": "2026-11-24T20:19:42.760659+00:00"
+  "updated_at": "2026-11-24T20:20:26.836885+00:00"
 }
