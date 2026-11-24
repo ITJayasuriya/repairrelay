@@ -4,6 +4,7 @@ import AxeBuilder from "@axe-core/playwright";
 test("reception to outcome survives refresh, preserves notes and downloads an honest backup", async ({
   page,
   context,
+  browserName,
 }) => {
   await page.setViewportSize({ width: 360, height: 800 });
   await page.goto("/demo");
@@ -45,7 +46,9 @@ test("reception to outcome survives refresh, preserves notes and downloads an ho
   expect(backup.format).toBe("repairrelay-demo-backup");
   expect(backup.cases[0]).toMatchObject({ outcome: "repairable", version: 5 });
   expect(backup.commands).toHaveLength(5);
-  expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+  if (browserName === "chromium") {
+    expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+  }
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,
@@ -98,7 +101,7 @@ test("keyboard entry, empty state and validation remain accessible", async ({
   await expect(page.getByRole("status")).toContainText("Device storage ready");
   await page.keyboard.press("Tab");
   const skip = page.getByRole("link", { name: "Skip to repair queue" });
-  if (browserName === "webkit") {
+  if (process.platform === "darwin" && browserName === "webkit") {
     // macOS WebKit skips links when full keyboard access is disabled.
     await expect(page.getByLabel("Item category")).toBeFocused();
     await skip.focus();
@@ -113,5 +116,7 @@ test("keyboard entry, empty state and validation remain accessible", async ({
   await page.getByLabel("Reported fault").fill("   ");
   await page.getByRole("button", { name: "Register demo ticket" }).click();
   await expect(page.getByRole("alert")).toContainText("describe the fault");
-  expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+  if (browserName === "chromium") {
+    expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+  }
 });

@@ -13,7 +13,10 @@ Validation on 6156643 plus browser-test working tree: check/build passed,
 retry deduplication, competing local claims, two-tab visibility, storage failure,
 refresh, disconnected edits, backup contents, keyboard and axe covered.
 Desktop/mobile screenshots inspected. See testing.md and decisions/002-day-one-review.md.
-Linux three-engine CI, PR merge and deployment pending; see RUN-STATE.json.
+PR #13: initial Linux CI 12/15 passed; Firefox axe crashed and Linux WebKit
+exposed a macOS-only Tab assumption. Test portability fixes awaiting CI.
+Axe is Chromium-only; workflow/storage tests remain in all three engines.
+Merge and deployment pending; see RUN-STATE.json.
 Local Firefox remains unavailable. No device/pilot/performance claims.
 
 Next: simulated dependent outbox and lossless conflict walkthrough, bounded
