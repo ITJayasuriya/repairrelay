@@ -4,14 +4,17 @@
   "state": "in_progress",
   "planned_daily_goal": "Day 1: validated domain boundaries and persistent local intake, ownership, notes and outcome demo",
   "commit_target": 4,
-  "completed_unit_ids": ["demo-domain"],
-  "actual_commit_shas": [],
+  "completed_unit_ids": ["demo-domain", "atomic-demo-store"],
+  "actual_commit_shas": ["5bc18b7"],
   "branch": "build/local-alpha",
   "open_pr": null,
   "last_tested_sha": null,
-  "actual_test_results": ["Vitest: 3 domain tests passed"],
-  "next_action": "Implement atomic IndexedDB demo store and browser storage tests",
+  "actual_test_results": [
+    "3 domain tests passed",
+    "Chromium/WebKit storage contract: 2 passed"
+  ],
+  "next_action": "Verify complete UI journey and review before publishing",
   "dirty_files": [],
   "blocker": null,
-  "updated_at": "2026-11-24T20:13:55.054934+00:00"
+  "updated_at": "2026-11-24T20:17:52.582061+00:00"
 }
