@@ -63,3 +63,12 @@ Chromium axe preview passed; 360px/1280px screenshots inspected.
 Review caught and removed restore limits from the backup export path: existing
 large stores must remain exportable. Fixed macOS first-tab expectation for the
 new disclosure. Next: publish review/limits and obtain required Linux CI.
+
+Day 2 review recorded in decisions/003-demo-recovery.md; source 44ab653.
+Completed acceptance: bounded versioned backup validation, replay consistency,
+atomic empty-store import with retry identities, preview/cancel/confirmation,
+no replacement and visible errors. Four-commit daily goal is recovery safety;
+dependent outbox/conflict walkthrough was not implemented and remains next.
+No quota-related delivery time lost. All team/PWA/ORDS/pilot scope above remains.
+Next: required Linux CI, merge/deploy verified source; then bounded dependent
+outbox and conflict preservation, followed by local Supabase team contracts.

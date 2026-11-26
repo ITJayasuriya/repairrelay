@@ -9,10 +9,10 @@
     "atomic-demo-restore",
     "recovery-interface"
   ],
-  "actual_commit_shas": ["c404598", "8cbdb89"],
+  "actual_commit_shas": ["c404598", "8cbdb89", "44ab653"],
   "branch": "build/demo-recovery",
   "open_pr": null,
-  "last_tested_sha": "8cbdb89 plus recovery UI working tree",
+  "last_tested_sha": "44ab653",
   "actual_test_results": [
     "check passed",
     "7 domain tests passed",
@@ -21,10 +21,10 @@
     "Chromium axe recovery preview passed",
     "360px mobile and 1280px desktop screenshots inspected"
   ],
-  "next_action": "Commit recovery UI; document maintainability review and limits; open PR and run required Linux CI",
+  "next_action": "Push reviewed recovery branch, create PR, inspect required Linux CI; merge only reviewed green head",
   "dirty_files": ["docs/RUN-STATE.json", "docs/STATUS.md"],
   "blocker": null,
-  "updated_at": "2026-11-26T16:36:19.878592+00:00",
+  "updated_at": "2026-11-26T16:36:53.484704+00:00",
   "merged_pr": "https://github.com/ITJayasuriya/repairrelay/pull/13",
   "merged_sha": "27a778933a903f47f192666597e3305e045c670f",
   "deployment": {
