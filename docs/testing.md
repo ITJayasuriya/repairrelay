@@ -30,3 +30,21 @@ crashed in axe scanning; Linux WebKit rejected a macOS-specific Tab expectation.
 Axe now runs in Chromium only (as scoped by ENGINEERING.md); all workflow and
 storage tests still run in all three engines. The Tab exception is macOS-only.
 Firefox/WebKit automated axe coverage is not claimed.
+
+## Day 2 recovery verification
+
+26 November 2026, macOS / Node 24, 44ab653 source.
+Seven domain tests and 16 Chromium/WebKit browser tests passed; check/build
+passed on the corresponding working tree. Initial local run was 15/16 because
+the new disclosure changed the macOS first Tab target; the corrected suite
+passed. Chromium axe checked the restore preview. Desktop 1280px and mobile
+360px screenshots were inspected. Restore failure/rollback uses real IndexedDB
+and an injected quota error, not a mocked persistence adapter.
+The macOS first control is now the recovery disclosure; skip target is still
+verified explicitly. Linux first Tab remains the skip link.
+See decisions/003-demo-recovery.md for limits and exact coverage boundaries.
+
+PR #14 initial Linux run 45860455443: 21/24, three recovery walkthroughs
+stopped at a macOS-only screenshot path. Use Playwright testInfo.outputPath
+for portable, test-isolated evidence. The corrected four affected local tests
+and check passed before pushing the fix; required Linux rerun remains the gate.

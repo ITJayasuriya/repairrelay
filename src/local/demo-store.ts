@@ -1,3 +1,4 @@
+import { validateDemoBackup } from "../domain/demo-backup";
 import Dexie, { liveQuery, type EntityTable } from "dexie";
 import {
   applyDemoCommand,
@@ -53,4 +54,18 @@ export async function exportDemoBackup() {
       commandSchema.parse(item),
     ),
   }));
+}
+
+// The emptiness check and import share the write lock, including across tabs.
+export async function restoreDemoBackup(input: unknown) {
+  const backup = validateDemoBackup(input);
+  return demoDb.transaction("rw", demoDb.cases, demoDb.commands, async () => {
+    if ((await demoDb.cases.count()) || (await demoDb.commands.count()))
+      throw new Error(
+        "Restore needs an empty demo store. Existing tickets have been kept. Use a separate browser profile to restore this backup.",
+      );
+    await demoDb.cases.bulkAdd(backup.cases);
+    await demoDb.commands.bulkAdd(backup.commands);
+    return backup.cases.length;
+  });
 }

@@ -6,7 +6,11 @@ claim it as the demo repairer, leave notes and record an explicit outcome.
 
 The demo persists cases and its command journal transactionally in this browser.
 It needs no cloud account. Download a JSON backup before clearing browser data;
-storage can be evicted. The backup is not an Open Repair Data Standard export.
+storage can be evicted. Restore a version 1 backup through “Restore a demo
+backup” in an empty browser profile, review the counts, then confirm. Restore
+never replaces existing tickets. Limits: 5 MiB, 1,000 tickets, 10,000 journal
+entries. Keep the original backup file. The backup is not an Open Repair Data
+Standard export.
 Team mode, service-worker offline loading and sync/conflicts are not shipped yet.
 Do not enter visitor personal information. No pilot results are claimed.
 

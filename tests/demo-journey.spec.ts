@@ -103,7 +103,7 @@ test("keyboard entry, empty state and validation remain accessible", async ({
   const skip = page.getByRole("link", { name: "Skip to repair queue" });
   if (process.platform === "darwin" && browserName === "webkit") {
     // macOS WebKit skips links when full keyboard access is disabled.
-    await expect(page.getByLabel("Item category")).toBeFocused();
+    await expect(page.locator(".recovery summary")).toBeFocused();
     await skip.focus();
   } else {
     await expect(skip).toBeFocused();
