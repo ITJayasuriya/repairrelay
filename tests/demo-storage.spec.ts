@@ -84,3 +84,68 @@ test("IndexedDB atomically journals writes, rejects stale versions and deduplica
   expect(result.after).toEqual(result.before);
   expect(result.commands).toBe(2);
 });
+
+test("restore is atomic, retains retry identities and never replaces another tab's data", async ({
+  page,
+}) => {
+  await page.goto("/demo");
+  const result = await page.evaluate(async () => {
+    const moduleUrl = "/src/local/demo-store.ts";
+    const {
+      demoDb,
+      saveDemoCommand,
+      exportDemoBackup,
+      restoreDemoBackup,
+    }: typeof import("../src/local/demo-store") = await import(moduleUrl);
+    const create = {
+      id: crypto.randomUUID(),
+      caseId: crypto.randomUUID(),
+      baseVersion: 0,
+      at: new Date().toISOString(),
+      action: {
+        kind: "intake" as const,
+        payload: { category: "Other" as const, fault: "Recovery hinge" },
+      },
+    };
+    await saveDemoCommand(create);
+    const backup = await exportDemoBackup();
+    // Emulate a fresh device while retaining the exact exported payload.
+    await demoDb.transaction("rw", demoDb.cases, demoDb.commands, async () => {
+      await demoDb.cases.clear();
+      await demoDb.commands.clear();
+    });
+    const fail = () => {
+      throw new DOMException("Simulated quota failure", "QuotaExceededError");
+    };
+    demoDb.commands.hook("creating", fail);
+    let aborted = false;
+    try {
+      await restoreDemoBackup(backup);
+    } catch {
+      aborted = true;
+    }
+    demoDb.commands.hook("creating").unsubscribe(fail);
+    const afterFailure = [
+      await demoDb.cases.count(),
+      await demoDb.commands.count(),
+    ];
+    const race = await Promise.allSettled([
+      restoreDemoBackup(backup),
+      restoreDemoBackup(backup),
+    ]);
+    await saveDemoCommand(create);
+    return {
+      aborted,
+      afterFailure,
+      race: race.map((item) => item.status).sort(),
+      cases: await demoDb.cases.toArray(),
+      count: await demoDb.commands.count(),
+      backup,
+    };
+  });
+  expect(result.aborted).toBe(true);
+  expect(result.afterFailure).toEqual([0, 0]);
+  expect(result.race).toEqual(["fulfilled", "rejected"]);
+  expect(result.cases).toEqual(result.backup.cases);
+  expect(result.count).toBe(1);
+});

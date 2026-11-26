@@ -1,3 +1,4 @@
+import { validateDemoBackup } from "../domain/demo-backup";
 import Dexie, { liveQuery, type EntityTable } from "dexie";
 import {
   applyDemoCommand,
@@ -44,13 +45,31 @@ export async function saveDemoCommand(input: DemoCommand) {
 }
 
 export async function exportDemoBackup() {
-  return demoDb.transaction("r", demoDb.cases, demoDb.commands, async () => ({
-    format: "repairrelay-demo-backup",
-    version: 1,
-    exportedAt: new Date().toISOString(),
-    cases: (await demoDb.cases.toArray()).map((item) => caseSchema.parse(item)),
-    commands: (await demoDb.commands.toArray()).map((item) =>
-      commandSchema.parse(item),
-    ),
-  }));
+  return demoDb.transaction("r", demoDb.cases, demoDb.commands, async () =>
+    validateDemoBackup({
+      format: "repairrelay-demo-backup",
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      cases: (await demoDb.cases.toArray()).map((item) =>
+        caseSchema.parse(item),
+      ),
+      commands: (await demoDb.commands.toArray()).map((item) =>
+        commandSchema.parse(item),
+      ),
+    }),
+  );
+}
+
+// The emptiness check and import share the write lock, including across tabs.
+export async function restoreDemoBackup(input: unknown) {
+  const backup = validateDemoBackup(input);
+  return demoDb.transaction("rw", demoDb.cases, demoDb.commands, async () => {
+    if ((await demoDb.cases.count()) || (await demoDb.commands.count()))
+      throw new Error(
+        "Restore needs an empty demo store. Existing tickets have been kept. Use a separate browser profile to restore this backup.",
+      );
+    await demoDb.cases.bulkAdd(backup.cases);
+    await demoDb.commands.bulkAdd(backup.commands);
+    return backup.cases.length;
+  });
 }

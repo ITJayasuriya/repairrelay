@@ -47,3 +47,10 @@ evidence above. Daily target: four coherent commits. Backup version 1 parsing
 now bounds file/record sizes and verifies snapshots against domain-command replay.
 Seven domain tests pass in the working tree. Next: atomic empty-store restore,
 preview/confirmation and actual IndexedDB/browser recovery coverage.
+
+Day 2 storage increment: backup export validates journal integrity; restore checks
+both tables are empty inside the same IndexedDB transaction as bulk import.
+Four Chromium/WebKit storage tests passed, including injected journal-write
+failure rolling back snapshots, competing imports and original-ID retry after
+restore. Initial sandbox localhost denial resolved with authorized execution.
+Next: verify UI preview/cancel/import and complete browser regression suite.
