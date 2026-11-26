@@ -10,7 +10,9 @@ test("reception to outcome survives refresh, preserves notes and downloads an ho
   await page.goto("/demo");
   await page.getByLabel("Reported fault").fill("Kettle does not switch on");
   await page.getByRole("button", { name: "Register demo ticket" }).click();
-  await expect(page.getByRole("status")).toContainText("Saved on this device");
+  await expect(page.locator(".save-status")).toContainText(
+    "Saved on this device",
+  );
   await page.getByRole("button", { name: "Claim in demo" }).click();
   await page
     .getByLabel("Handoff note")
@@ -26,7 +28,9 @@ test("reception to outcome survives refresh, preserves notes and downloads an ho
   ).toBeVisible();
   await context.setOffline(true);
   await page.getByRole("button", { name: "Wait for part" }).click();
-  await expect(page.getByRole("status")).toContainText("Saved on this device");
+  await expect(page.locator(".save-status")).toContainText(
+    "Saved on this device",
+  );
   await expect(
     page.getByRole("button", { name: "Wait for part" }),
   ).toBeDisabled();
@@ -98,7 +102,9 @@ test("keyboard entry, empty state and validation remain accessible", async ({
   browserName,
 }) => {
   await page.goto("/demo");
-  await expect(page.getByRole("status")).toContainText("Device storage ready");
+  await expect(page.locator(".save-status")).toContainText(
+    "Device storage ready",
+  );
   await page.keyboard.press("Tab");
   const skip = page.getByRole("link", { name: "Skip to repair queue" });
   if (process.platform === "darwin" && browserName === "webkit") {

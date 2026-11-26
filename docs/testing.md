@@ -48,3 +48,13 @@ PR #14 initial Linux run 45860455443: 21/24, three recovery walkthroughs
 stopped at a macOS-only screenshot path. Use Playwright testInfo.outputPath
 for portable, test-isolated evidence. The corrected four affected local tests
 and check passed before pushing the fix; required Linux rerun remains the gate.
+
+## Demo outbox (27 November)
+
+`tests/demo-sync.spec.ts` exercises real IndexedDB in each configured browser:
+commit with lost acknowledgment, identity-preserving retry, concurrent sync
+calls, per-case dependent blocking, progress for unrelated tickets, the 500
+pending-write boundary, offline manual simulation, refresh and focus. Conflict
+review has Chromium axe coverage. These are simulator tests; they do not prove
+Postgres races, network reconnection or canonical server authorization.
+Version 1 backups intentionally omit simulator state and replay as pending.

@@ -77,3 +77,21 @@ PR #14 initial Linux CI: 21/24 passed. Recovery screenshot capture used a macOS
 temporary path absent on Linux; switched to Playwright testInfo.outputPath.
 This real CI fix is a fifth source commit beyond the retained target of four.
 Next: rerun affected local journeys and required all-engine Linux CI.
+
+Day 2 completed 2026-11-26T16:44:52.586889+00:00. PR #14 corrected Linux CI 45860908146
+passed quality: seven domain tests and 24 browser tests across Chromium, Firefox,
+WebKit. Reviewed head 6be4c9a merged with SHA-bound normal squash as b2ca7b2.
+Main check (after checkpoint formatting), seven domain tests and build passed.
+Deployed once: https://5c4d1f8c.isuru-repairrelay.pages.dev; production
+https://isuru-repairrelay.pages.dev/demo serves b2ca7b2. Verified real backup
+download, fresh-context preview/restore, focus return, refresh, offline new note
+and refresh persistence. Requests only Pages host; mobile/desktop inspected.
+Source commits c404598, 8cbdb89, 44ab653, 16d236b, 6be4c9a (target four,
+actual five including CI portability repair). No hosted database mutations.
+Final checkpoint/status evidence remains locally modified for the next meaningful
+commit. Day 2 is complete; dependent outbox/conflicts remain next, not delivered.
+No critical credential/CI blocker; external pilot evidence remains missing.
+
+27 November — Day 3: dependent journal-derived demo outbox implemented; separate durable simulator receipts protect lost acknowledgments. New writes capped at 500 pending commands; original journals/backups retained. Nine domain tests and build passed before UI. Next: real IndexedDB failure/race tests, manual sync UI, required CI. Not team sync.
+
+Day 3 verification: check, nine domain tests, build and 24 Chromium/WebKit tests passed. Actual IndexedDB lost acknowledgments, concurrent sync calls, dependent conflicts, unrelated progress and 500-command cap verified. Offline manual simulator sync/refresh/focus passed; Chromium axe conflict review passed. Mobile and desktop screenshots inspected. Review removed duplicate queue state, made counts transactional and preserved larger backup recovery capacity. Resolution editing, scripted competing-device scenario, real Postgres/team auth/PWA/ORDS remain unfinished. Target two source commits retained; core f1c0fd8 plus reviewed UI/tests pending commit. Open PRs #1/#2 contain major action upgrades with old green setup-only checks; compatibility review/current product CI still needed before merge. #3 is red; #12 has no CI and known placeholders, not integrated. No quota lost time. Next: required Linux CI then merge/deploy this bounded demo increment; explicit resolution and team contracts next.
