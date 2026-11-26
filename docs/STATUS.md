@@ -72,3 +72,8 @@ dependent outbox/conflict walkthrough was not implemented and remains next.
 No quota-related delivery time lost. All team/PWA/ORDS/pilot scope above remains.
 Next: required Linux CI, merge/deploy verified source; then bounded dependent
 outbox and conflict preservation, followed by local Supabase team contracts.
+
+PR #14 initial Linux CI: 21/24 passed. Recovery screenshot capture used a macOS
+temporary path absent on Linux; switched to Playwright testInfo.outputPath.
+This real CI fix is a fifth source commit beyond the retained target of four.
+Next: rerun affected local journeys and required all-engine Linux CI.

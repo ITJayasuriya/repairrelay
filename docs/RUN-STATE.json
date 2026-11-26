@@ -9,22 +9,28 @@
     "atomic-demo-restore",
     "recovery-interface"
   ],
-  "actual_commit_shas": ["c404598", "8cbdb89", "44ab653"],
+  "actual_commit_shas": [
+    "c404598",
+    "8cbdb89",
+    "44ab653",
+    "16d236b60e27f0e37521b4b9943eaca68c5ef22c"
+  ],
   "branch": "build/demo-recovery",
-  "open_pr": null,
-  "last_tested_sha": "44ab653",
+  "open_pr": "https://github.com/ITJayasuriya/repairrelay/pull/14",
+  "last_tested_sha": "16d236b60e27f0e37521b4b9943eaca68c5ef22c",
   "actual_test_results": [
     "check passed",
     "7 domain tests passed",
     "build passed",
     "16 Chromium/WebKit browser tests passed",
     "Chromium axe recovery preview passed",
-    "360px mobile and 1280px desktop screenshots inspected"
+    "360px mobile and 1280px desktop screenshots inspected",
+    "Initial Linux CI 21/24: screenshot path absent on Linux"
   ],
-  "next_action": "Push reviewed recovery branch, create PR, inspect required Linux CI; merge only reviewed green head",
-  "dirty_files": ["docs/RUN-STATE.json", "docs/STATUS.md"],
+  "next_action": "Fix portable screenshot output, rerun recovery journeys, push same PR and require green CI on new head",
+  "dirty_files": ["docs/RUN-STATE.json"],
   "blocker": null,
-  "updated_at": "2026-11-26T16:36:53.484704+00:00",
+  "updated_at": "2026-11-26T16:39:34.501756+00:00",
   "merged_pr": "https://github.com/ITJayasuriya/repairrelay/pull/13",
   "merged_sha": "27a778933a903f47f192666597e3305e045c670f",
   "deployment": {

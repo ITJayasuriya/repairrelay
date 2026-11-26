@@ -43,3 +43,8 @@ and an injected quota error, not a mocked persistence adapter.
 The macOS first control is now the recovery disclosure; skip target is still
 verified explicitly. Linux first Tab remains the skip link.
 See decisions/003-demo-recovery.md for limits and exact coverage boundaries.
+
+PR #14 initial Linux run 45860455443: 21/24, three recovery walkthroughs
+stopped at a macOS-only screenshot path. Use Playwright testInfo.outputPath
+for portable, test-isolated evidence. The corrected four affected local tests
+and check passed before pushing the fix; required Linux rerun remains the gate.

@@ -45,7 +45,7 @@ const file = (value: unknown) => ({
 test("backup preview, cancel and confirmed restore preserve the complete handoff", async ({
   page,
   browserName,
-}) => {
+}, testInfo) => {
   await page.setViewportSize({ width: 360, height: 800 });
   await page.goto("/demo");
   await page.getByText("Restore a demo backup", { exact: true }).click();
@@ -55,7 +55,7 @@ test("backup preview, cancel and confirmed restore preserve the complete handoff
     0,
   );
   await page.screenshot({
-    path: `/private/tmp/repairrelay-recovery-mobile-${browserName}.png`,
+    path: testInfo.outputPath("recovery-mobile.png"),
     fullPage: true,
   });
   if (browserName === "chromium")
@@ -89,7 +89,7 @@ test("backup preview, cancel and confirmed restore preserve the complete handoff
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.getByText("Restore a demo backup", { exact: true }).click();
   await page.screenshot({
-    path: `/private/tmp/repairrelay-recovery-desktop-${browserName}.png`,
+    path: testInfo.outputPath("recovery-desktop.png"),
     fullPage: true,
   });
 });
