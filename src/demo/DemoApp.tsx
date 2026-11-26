@@ -1,3 +1,4 @@
+import { DemoSync } from "../features/sync/DemoSync";
 import { BackupRestore } from "../features/recovery/BackupRestore";
 import { useEffect, useState } from "react";
 import { type CaseAction, type RepairCase } from "../domain/case";
@@ -114,6 +115,7 @@ export function DemoApp() {
           are provisional. Browser storage can be cleared or evicted. Team mode,
           offline app loading and standard exports are still in development.
         </aside>
+        <DemoSync disabled={!ready || busy} setBusy={setBusy} />
         <BackupRestore
           disabled={!ready || busy}
           occupied={items.length > 0}

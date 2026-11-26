@@ -1,19 +1,29 @@
 {
   "schema_version": 1,
   "local_date": "2026-11-27",
-  "state": "in_progress",
+  "state": "awaiting_ci",
   "planned_daily_goal": "Day 3: dependent outbox domain and transactional persistence with lossless conflict records",
   "commit_target": 2,
-  "completed_unit_ids": ["outbox-domain"],
-  "actual_commit_shas": [],
+  "completed_unit_ids": [
+    "outbox-domain",
+    "durable-simulator",
+    "manual-sync-and-conflict-inspection"
+  ],
+  "actual_commit_shas": ["f1c0fd8"],
   "branch": "build/demo-outbox",
   "open_pr": null,
-  "last_tested_sha": "b2ca7b2389280f91f95fa3879356e32e8ac8fa66",
-  "actual_test_results": ["9 domain tests passed", "build passed before UI"],
-  "next_action": "Run actual IndexedDB outbox lost-ack/concurrency/conflict/cap tests; wire manual simulation UI; review and obtain Linux CI",
-  "dirty_files": ["docs/RUN-STATE.json", "docs/STATUS.md"],
+  "last_tested_sha": null,
+  "actual_test_results": [
+    "check passed",
+    "9 domain tests passed",
+    "build passed",
+    "24 Chromium/WebKit tests passed including actual IndexedDB lost ack, concurrent sync, conflicts, full queue and offline manual sync",
+    "Chromium axe conflict review passed; 360px/1280px screenshots inspected"
+  ],
+  "next_action": "Commit reviewed manual sync and regression coverage, open PR; obtain Linux required CI before SHA-bound merge/deploy",
+  "dirty_files": [],
   "blocker": null,
-  "updated_at": "2026-11-26T19:52:57.622513+00:00",
+  "updated_at": "2026-11-26T19:56:38.387429+00:00",
   "merged_pr": "https://github.com/ITJayasuriya/repairrelay/pull/14",
   "merged_sha": "b2ca7b2389280f91f95fa3879356e32e8ac8fa66",
   "deployment": {

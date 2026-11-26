@@ -332,3 +332,22 @@ footer {
 .recovery .handoff {
   font-variant-numeric: tabular-nums;
 }
+
+.demo-sync {
+  border: 1px solid var(--bench-ink);
+  padding: 1rem;
+  margin-block: 1rem;
+}
+.demo-sync p {
+  max-width: 70ch;
+}
+.conflict-values {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  overflow-wrap: anywhere;
+}
+.conflict-values h3 {
+  font-size: 1rem;
+  line-height: 1.3;
+}

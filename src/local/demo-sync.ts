@@ -26,9 +26,15 @@ export function watchDemoPending(
   next: (count: number) => void,
   error: (error: unknown) => void,
 ) {
-  return liveQuery(
-    async () =>
-      (await demoDb.commands.count()) - (await demoDb.acknowledgments.count()),
+  return liveQuery(() =>
+    demoDb.transaction(
+      "r",
+      demoDb.commands,
+      demoDb.acknowledgments,
+      async () =>
+        (await demoDb.commands.count()) -
+        (await demoDb.acknowledgments.count()),
+    ),
   ).subscribe({ next, error });
 }
 

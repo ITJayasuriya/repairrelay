@@ -4,7 +4,9 @@ test("IndexedDB atomically journals writes, rejects stale versions and deduplica
   page,
 }) => {
   await page.goto("/");
-  await expect(page.getByRole("status")).toContainText("Device storage ready");
+  await expect(page.locator(".save-status")).toContainText(
+    "Device storage ready",
+  );
   const result = await page.evaluate(async () => {
     const moduleUrl = "/src/local/demo-store.ts";
     const {
