@@ -56,6 +56,7 @@ test("IndexedDB atomically journals writes, rejects stale versions and deduplica
         "rw",
         demoDb.cases,
         demoDb.commands,
+        demoDb.acknowledgments,
         async () => {
           await saveDemoCommand({
             ...create,
@@ -110,10 +111,16 @@ test("restore is atomic, retains retry identities and never replaces another tab
     await saveDemoCommand(create);
     const backup = await exportDemoBackup();
     // Emulate a fresh device while retaining the exact exported payload.
-    await demoDb.transaction("rw", demoDb.cases, demoDb.commands, async () => {
-      await demoDb.cases.clear();
-      await demoDb.commands.clear();
-    });
+    await demoDb.transaction(
+      "rw",
+      demoDb.cases,
+      demoDb.commands,
+      demoDb.acknowledgments,
+      async () => {
+        await demoDb.cases.clear();
+        await demoDb.commands.clear();
+      },
+    );
     const fail = () => {
       throw new DOMException("Simulated quota failure", "QuotaExceededError");
     };
