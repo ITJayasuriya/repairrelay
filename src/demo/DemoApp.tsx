@@ -1,3 +1,4 @@
+import { BackupRestore } from "../features/recovery/BackupRestore";
 import { useEffect, useState } from "react";
 import { type CaseAction, type RepairCase } from "../domain/case";
 import {
@@ -113,6 +114,11 @@ export function DemoApp() {
           are provisional. Browser storage can be cleared or evicted. Team mode,
           offline app loading and standard exports are still in development.
         </aside>
+        <BackupRestore
+          disabled={!ready || busy}
+          occupied={items.length > 0}
+          setBusy={setBusy}
+        />
         <p className="save-status" role="status">
           {busy
             ? "Saving to this device…"

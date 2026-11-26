@@ -45,19 +45,15 @@ export async function saveDemoCommand(input: DemoCommand) {
 }
 
 export async function exportDemoBackup() {
-  return demoDb.transaction("r", demoDb.cases, demoDb.commands, async () =>
-    validateDemoBackup({
-      format: "repairrelay-demo-backup",
-      version: 1,
-      exportedAt: new Date().toISOString(),
-      cases: (await demoDb.cases.toArray()).map((item) =>
-        caseSchema.parse(item),
-      ),
-      commands: (await demoDb.commands.toArray()).map((item) =>
-        commandSchema.parse(item),
-      ),
-    }),
-  );
+  return demoDb.transaction("r", demoDb.cases, demoDb.commands, async () => ({
+    format: "repairrelay-demo-backup",
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    cases: (await demoDb.cases.toArray()).map((item) => caseSchema.parse(item)),
+    commands: (await demoDb.commands.toArray()).map((item) =>
+      commandSchema.parse(item),
+    ),
+  }));
 }
 
 // The emptiness check and import share the write lock, including across tabs.

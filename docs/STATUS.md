@@ -54,3 +54,12 @@ Four Chromium/WebKit storage tests passed, including injected journal-write
 failure rolling back snapshots, competing imports and original-ID retry after
 restore. Initial sandbox localhost denial resolved with authorized execution.
 Next: verify UI preview/cancel/import and complete browser regression suite.
+
+Day 2 UI increment: recovery disclosure, file-size gate, validated preview,
+cancel and explicit confirmation; existing tickets disable restore. Focus
+returns to the disclosure on cancel/success. Full local suite: 16/16 in
+Chromium/WebKit, seven domain tests, check and build passed (8cbdb89 plus UI).
+Chromium axe preview passed; 360px/1280px screenshots inspected.
+Review caught and removed restore limits from the backup export path: existing
+large stores must remain exportable. Fixed macOS first-tab expectation for the
+new disclosure. Next: publish review/limits and obtain required Linux CI.
