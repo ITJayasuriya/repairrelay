@@ -1,28 +1,39 @@
 {
   "schema_version": 1,
-  "local_date": "2026-11-25",
+  "local_date": "2026-11-26",
   "state": "in_progress",
-  "planned_daily_goal": "Day 1: validated domain boundaries and persistent local intake, ownership, notes and outcome demo",
+  "planned_daily_goal": "Day 2: validated transactional demo backup restore and recovery coverage",
   "commit_target": 4,
-  "completed_unit_ids": [
-    "demo-domain",
-    "atomic-demo-store",
-    "intake-to-outcome-ui",
-    "browser-coverage-review"
-  ],
-  "actual_commit_shas": ["5bc18b7", "94284f1", "6156643", "f93801f"],
-  "branch": "build/local-alpha",
-  "open_pr": "https://github.com/ITJayasuriya/repairrelay/pull/13",
-  "last_tested_sha": "f93801f",
+  "completed_unit_ids": ["backup-replay-validation"],
+  "actual_commit_shas": [],
+  "branch": "build/demo-recovery",
+  "open_pr": null,
+  "last_tested_sha": "27a778933a903f47f192666597e3305e045c670f",
   "actual_test_results": [
     "check passed",
     "Vitest 3 passed",
     "build passed",
     "Chromium/WebKit 10 passed",
-    "First Linux CI failed: 12/15, Firefox axe crashes and WebKit platform-specific focus assertion"
+    "First Linux CI failed: 12/15, Firefox axe crashes and WebKit platform-specific focus assertion",
+    "Corrected Linux CI: 15/15 across Chromium, Firefox, WebKit; Chromium axe",
+    "Main 27a7789: check, 3 domain tests, build passed",
+    "Production 27a7789 verified: intake, claim, offline note, refresh persistence, outcome, backup; desktop/mobile inspected; requests only Pages host"
   ],
-  "next_action": "Check portability fix locally, commit and rerun PR 13 CI; do not deploy failing CI",
-  "dirty_files": [],
+  "next_action": "Commit validated replay boundary; implement atomic empty-store restore",
+  "dirty_files": ["docs/RUN-STATE.json", "docs/STATUS.md"],
   "blocker": null,
-  "updated_at": "2026-11-24T20:23:53.673741+00:00"
+  "updated_at": "2026-11-26T16:33:30.551821+00:00",
+  "merged_pr": "https://github.com/ITJayasuriya/repairrelay/pull/13",
+  "merged_sha": "27a778933a903f47f192666597e3305e045c670f",
+  "deployment": {
+    "url": "https://isuru-repairrelay.pages.dev/demo",
+    "immutable_url": "https://14e3164b.isuru-repairrelay.pages.dev",
+    "sha": "27a778933a903f47f192666597e3305e045c670f",
+    "verified_journey": "intake, simulated claim, disconnected note, refresh, outcome, backup; mobile and desktop screenshots inspected"
+  },
+  "ci": {
+    "url": "https://github.com/ITJayasuriya/repairrelay/actions/runs/45480465624",
+    "tested_sha": "9acb798c8857ef359c5b1e87e464a571b92b09eb",
+    "result": "quality passed; 3 domain tests and 15 browser tests across Chromium/Firefox/WebKit; Chromium axe only"
+  }
 }
