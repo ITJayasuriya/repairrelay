@@ -65,7 +65,7 @@ describe("demo recovery boundary", () => {
     expect(() => parseDemoBackup(" ".repeat(maxBackupBytes + 1))).toThrow(
       "5 MiB",
     );
-    expect(() => validateDemoBackup({ ...backup, version: 2 })).toThrow(
+    expect(() => validateDemoBackup({ ...backup, version: 3 })).toThrow(
       "supported",
     );
     expect(() =>
@@ -75,4 +75,59 @@ describe("demo recovery boundary", () => {
       }),
     ).toThrow("supported");
   });
+});
+
+it("version 2 resolution replay rejects missing, duplicate and cross-ticket supersession identities", () => {
+  const resolution: DemoCommand = {
+    ...claim,
+    id: crypto.randomUUID(),
+    baseVersion: 2,
+    action: {
+      kind: "resolve",
+      server: { ...item, version: 8 },
+      choice: "combine",
+      supersedes: [claim.id],
+    },
+  };
+  const resolved = applyDemoCommand(item, resolution);
+  const v2 = {
+    ...backup,
+    version: 2,
+    cases: [resolved],
+    commands: [create, claim, resolution],
+  };
+  expect(validateDemoBackup(v2).cases).toEqual([resolved]);
+  expect(() => validateDemoBackup({ ...v2, version: 1 })).toThrow("version 2");
+  if (resolution.action.kind !== "resolve") throw new Error("fixture");
+  for (const supersedes of [[crypto.randomUUID()], [claim.id, claim.id]]) {
+    expect(() =>
+      validateDemoBackup({
+        ...v2,
+        commands: [
+          create,
+          claim,
+          { ...resolution, action: { ...resolution.action, supersedes } },
+        ],
+      }),
+    ).toThrow("missing or unrelated");
+  }
+  const foreign = {
+    ...create,
+    id: crypto.randomUUID(),
+    caseId: crypto.randomUUID(),
+  };
+  expect(() =>
+    validateDemoBackup({
+      ...v2,
+      commands: [
+        create,
+        foreign,
+        claim,
+        {
+          ...resolution,
+          action: { ...resolution.action, supersedes: [foreign.id] },
+        },
+      ],
+    }),
+  ).toThrow("missing or unrelated");
 });

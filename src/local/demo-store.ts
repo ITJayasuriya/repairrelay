@@ -1,4 +1,4 @@
-import { maxPendingCommands } from "../domain/demo-outbox";
+import { maxPendingCommands, pendingDemoCommands } from "../domain/demo-outbox";
 import { validateDemoBackup } from "../domain/demo-backup";
 import Dexie, { liveQuery, type EntityTable } from "dexie";
 import {
@@ -44,10 +44,29 @@ export async function saveDemoCommand(input: DemoCommand) {
           );
         return;
       }
+      const journal = (await demoDb.commands.toArray()).map((row) =>
+        commandSchema.parse(row),
+      );
+      const pending = pendingDemoCommands(
+        journal,
+        await demoDb.acknowledgments.toCollection().primaryKeys(),
+      );
+      if (command.action.kind === "resolve") {
+        const ids = pending
+          .filter((entry) => entry.caseId === command.caseId)
+          .map((entry) => entry.id)
+          .sort();
+        if (
+          JSON.stringify(ids) !==
+          JSON.stringify([...command.action.supersedes].sort())
+        )
+          throw new Error(
+            "Pending changes changed. Run simulated sync and review again.",
+          );
+      }
       if (
-        (await demoDb.commands.count()) -
-          (await demoDb.acknowledgments.count()) >=
-        maxPendingCommands
+        pending.length >= maxPendingCommands &&
+        command.action.kind !== "resolve"
       )
         throw new Error(
           "The demo outbox is full (500 changes). Back up your data, then run simulated sync before saving more.",
@@ -64,15 +83,20 @@ export async function saveDemoCommand(input: DemoCommand) {
 }
 
 export async function exportDemoBackup() {
-  return demoDb.transaction("r", demoDb.cases, demoDb.commands, async () => ({
-    format: "repairrelay-demo-backup",
-    version: 1,
-    exportedAt: new Date().toISOString(),
-    cases: (await demoDb.cases.toArray()).map((item) => caseSchema.parse(item)),
-    commands: (await demoDb.commands.toArray()).map((item) =>
+  return demoDb.transaction("r", demoDb.cases, demoDb.commands, async () => {
+    const commands = (await demoDb.commands.toArray()).map((item) =>
       commandSchema.parse(item),
-    ),
-  }));
+    );
+    return {
+      format: "repairrelay-demo-backup",
+      version: commands.some((c) => c.action.kind === "resolve") ? 2 : 1,
+      exportedAt: new Date().toISOString(),
+      cases: (await demoDb.cases.toArray()).map((item) =>
+        caseSchema.parse(item),
+      ),
+      commands,
+    };
+  });
 }
 
 // The emptiness check and import share the write lock, including across tabs.

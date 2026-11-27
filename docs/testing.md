@@ -58,3 +58,13 @@ pending-write boundary, offline manual simulation, refresh and focus. Conflict
 review has Chromium axe coverage. These are simulator tests; they do not prove
 Postgres races, network reconnection or canonical server authorization.
 Version 1 backups intentionally omit simulator state and replay as pending.
+
+## Conflict resolution regression
+
+`tests/demo-resolution.spec.ts` exercises the browser-only practice scenario,
+full dependent local review, select-server/combine choices, stale reviews,
+lost resolution acknowledgment, two-tab protection, atomic save rollback,
+post-resolution dependency ordering and replay/restore of version 2 backups.
+Run `npm run test:e2e:local` on this Mac; Linux CI includes Firefox as well.
+The simulator is not evidence for real Postgres authorization or race behavior.
+Backups with resolution history need this build or later; see decision 005.

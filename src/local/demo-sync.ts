@@ -11,7 +11,7 @@ import {
   maxPendingCommands,
   pendingDemoCommands,
 } from "../domain/demo-outbox";
-import { demoDb } from "./demo-store";
+import { demoDb, saveDemoCommand } from "./demo-store";
 
 // Separate simulated authority allows a committed response to be lost before acknowledgment.
 export const demoServer = new Dexie(
@@ -32,8 +32,12 @@ export function watchDemoPending(
       demoDb.commands,
       demoDb.acknowledgments,
       async () =>
-        (await demoDb.commands.count()) -
-        (await demoDb.acknowledgments.count()),
+        pendingDemoCommands(
+          (await demoDb.commands.toArray()).map((row) =>
+            commandSchema.parse(row),
+          ),
+          await demoDb.acknowledgments.toCollection().primaryKeys(),
+        ).length,
     ),
   ).subscribe({ next, error });
 }
@@ -79,6 +83,21 @@ export async function syncDemoCommands() {
         }
         const stored = await demoServer.cases.get(command.caseId);
         const server = stored ? caseSchema.parse(stored) : undefined;
+        if (command.action.kind === "resolve") {
+          if (JSON.stringify(server) !== JSON.stringify(command.action.server))
+            return { accepted: false as const, server };
+          await demoServer.cases.put(
+            demoConflict(
+              journal.filter(
+                (entry) => entry.baseVersion <= command.baseVersion,
+              ),
+              command,
+              server,
+            ).local,
+          );
+          await demoServer.receipts.add({ id: command.id, command });
+          return { accepted: true as const };
+        }
         if ((server?.version ?? 0) !== command.baseVersion)
           return { accepted: false as const, server };
         await demoServer.cases.put(applyDemoCommand(server, command));
@@ -96,4 +115,41 @@ export async function syncDemoCommands() {
     acknowledged++;
   }
   return { acknowledged, conflicts };
+}
+
+// The command captures all dependent local work, not just the first blocked change.
+export async function resolveDemoConflict(
+  conflict: ReturnType<typeof demoConflict>,
+  choice: "server" | "combine",
+) {
+  if (!conflict.server)
+    throw new Error("Missing simulator ticket; export for manual recovery.");
+  const journal = (await demoDb.commands.toArray()).map((row) =>
+    commandSchema.parse(row),
+  );
+  const pending = pendingDemoCommands(
+    journal,
+    await demoDb.acknowledgments.toCollection().primaryKeys(),
+  );
+  const current = caseSchema.parse(
+    await demoDb.cases.get(conflict.command.caseId),
+  );
+  if (JSON.stringify(current) !== JSON.stringify(conflict.local))
+    throw new Error(
+      "Local ticket changed. Run simulated sync and review again.",
+    );
+  await saveDemoCommand({
+    id: crypto.randomUUID(),
+    caseId: current.id,
+    baseVersion: current.version,
+    at: new Date().toISOString(),
+    action: {
+      kind: "resolve",
+      server: conflict.server,
+      choice,
+      supersedes: pending
+        .filter((entry) => entry.caseId === current.id)
+        .map((entry) => entry.id),
+    },
+  });
 }

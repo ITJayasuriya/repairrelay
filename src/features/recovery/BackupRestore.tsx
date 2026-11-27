@@ -64,9 +64,9 @@ export function BackupRestore({
     <details className="recovery" ref={disclosure}>
       <summary>Restore a demo backup</summary>
       <p id="restore-help">
-        Restore version 1 backups up to 5 MiB into an empty demo store. Existing
-        tickets are never replaced. To review a backup separately, use another
-        browser profile.
+        Restore version 1 or 2 backups up to 5 MiB into an empty demo store.
+        Existing tickets are never replaced. To review a backup separately, use
+        another browser profile.
       </p>
       <label>
         Demo backup file
