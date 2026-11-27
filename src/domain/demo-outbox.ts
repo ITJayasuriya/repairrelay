@@ -8,6 +8,10 @@ export function pendingDemoCommands(
   acknowledged: string[],
 ) {
   const sent = new Set(acknowledged);
+  for (const command of journal) {
+    if (command.action.kind === "resolve")
+      for (const id of command.action.supersedes) sent.add(id);
+  }
   return journal
     .filter((command) => !sent.has(command.id))
     .sort((a, b) => a.baseVersion - b.baseVersion || a.id.localeCompare(b.id));
@@ -28,5 +32,15 @@ export function demoConflict(
     .sort((a, b) => a.baseVersion - b.baseVersion)) {
     base = applyDemoCommand(base, previous);
   }
-  return { command, base, local: applyDemoCommand(base, command), server };
+  let local = applyDemoCommand(base, command);
+  for (const dependent of journal
+    .filter(
+      (entry) =>
+        entry.caseId === command.caseId &&
+        entry.baseVersion > command.baseVersion,
+    )
+    .sort((a, b) => a.baseVersion - b.baseVersion)) {
+    local = applyDemoCommand(local, dependent);
+  }
+  return { command, base, local, server };
 }

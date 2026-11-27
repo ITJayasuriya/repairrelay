@@ -9,7 +9,7 @@ import {
 export const maxBackupBytes = 5 * 1024 * 1024;
 const backupSchema = z.object({
   format: z.literal("repairrelay-demo-backup"),
-  version: z.literal(1),
+  version: z.union([z.literal(1), z.literal(2)]),
   exportedAt: z.iso.datetime(),
   cases: z.array(caseSchema).max(1000),
   commands: z.array(commandSchema).max(10000),
@@ -19,16 +19,33 @@ const backupSchema = z.object({
 export function validateDemoBackup(input: unknown) {
   const parsed = backupSchema.safeParse(input);
   if (!parsed.success)
-    throw new Error("Choose a supported RepairRelay demo backup (version 1).");
+    throw new Error(
+      "Choose a supported RepairRelay demo backup (version 1 or 2).",
+    );
   const backup = parsed.data;
+  if (
+    backup.version === 1 &&
+    backup.commands.some((c) => c.action.kind === "resolve")
+  )
+    throw new Error("Resolution history requires backup version 2.");
   const cases = new Map<string, RepairCase>();
-  const commandIds = new Set<string>();
+  const commandCases = new Map<string, string>();
   for (const command of [...backup.commands].sort(
     (a, b) => a.baseVersion - b.baseVersion,
   )) {
-    if (commandIds.has(command.id))
+    if (commandCases.has(command.id))
       throw new Error("Backup contains duplicate command identities.");
-    commandIds.add(command.id);
+    if (command.action.kind === "resolve") {
+      const superseded = command.action.supersedes;
+      if (
+        new Set(superseded).size !== superseded.length ||
+        superseded.some((id) => commandCases.get(id) !== command.caseId)
+      )
+        throw new Error(
+          "Resolution history refers to missing or unrelated changes.",
+        );
+    }
+    commandCases.set(command.id, command.caseId);
     cases.set(
       command.caseId,
       applyDemoCommand(cases.get(command.caseId), command),

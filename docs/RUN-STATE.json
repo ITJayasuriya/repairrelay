@@ -1,40 +1,35 @@
 {
   "schema_version": 1,
-  "local_date": "2026-11-27",
-  "state": "awaiting_ci",
-  "planned_daily_goal": "Day 3: dependent outbox domain and transactional persistence with lossless conflict records",
-  "commit_target": 2,
-  "completed_unit_ids": [
-    "outbox-domain",
-    "durable-simulator",
-    "manual-sync-and-conflict-inspection"
-  ],
-  "actual_commit_shas": ["f1c0fd8"],
-  "branch": "build/demo-outbox",
+  "local_date": "2026-11-28",
+  "state": "in_progress",
+  "planned_daily_goal": "Day 4: explicit lossless demo conflict resolution with durable competing-device exercise",
+  "commit_target": 5,
+  "completed_unit_ids": [],
+  "actual_commit_shas": [],
+  "branch": "build/demo-resolution",
   "open_pr": null,
-  "last_tested_sha": null,
+  "last_tested_sha": "b630b2258de541296eaa977b91bff43b6d486b42",
   "actual_test_results": [
     "check passed",
-    "9 domain tests passed",
+    "10 domain tests passed",
     "build passed",
-    "24 Chromium/WebKit tests passed including actual IndexedDB lost ack, concurrent sync, conflicts, full queue and offline manual sync",
-    "Chromium axe conflict review passed; 360px/1280px screenshots inspected"
+    "Browser startup blocked by sandbox localhost; authorized retry pending"
   ],
-  "next_action": "Commit reviewed manual sync and regression coverage, open PR; obtain Linux required CI before SHA-bound merge/deploy",
-  "dirty_files": [],
+  "next_action": "Run actual IndexedDB resolution race/lost-response/restore tests and full Chromium/WebKit suite, review then commit",
+  "dirty_files": ["docs/RUN-STATE.json", "docs/STATUS.md"],
   "blocker": null,
-  "updated_at": "2026-11-26T19:56:38.387429+00:00",
-  "merged_pr": "https://github.com/ITJayasuriya/repairrelay/pull/14",
-  "merged_sha": "b2ca7b2389280f91f95fa3879356e32e8ac8fa66",
+  "updated_at": "2026-11-27T19:51:41.176757+00:00",
+  "merged_pr": "https://github.com/ITJayasuriya/repairrelay/pull/15",
+  "merged_sha": "b630b2258de541296eaa977b91bff43b6d486b42",
   "deployment": {
     "url": "https://isuru-repairrelay.pages.dev/demo",
-    "immutable_url": "https://5c4d1f8c.isuru-repairrelay.pages.dev",
-    "sha": "b2ca7b2389280f91f95fa3879356e32e8ac8fa66",
-    "verified_journey": "production backup, fresh-context preview/restore, focus, refresh, offline subsequent note, persistence; mobile/desktop inspected"
+    "immutable_url": "https://45a2bc07.isuru-repairrelay.pages.dev",
+    "sha": "b630b2258de541296eaa977b91bff43b6d486b42",
+    "status": "deployed once during recovery; production revision and synthetic journey verified"
   },
   "ci": {
-    "url": "https://github.com/ITJayasuriya/repairrelay/actions/runs/45860908146",
-    "tested_sha": "6be4c9ac834db55ba0f2d21c0272e2f0be229161",
-    "result": "quality passed: 7 domain tests, 24 browser tests Chromium Firefox WebKit"
+    "url": "https://github.com/ITJayasuriya/repairrelay/actions/runs/45887384294",
+    "tested_sha": "f77354e83d375b6820ae1da1aa74d1a1def97c06",
+    "result": "quality passed; 9 domain and 36 Chromium/Firefox/WebKit tests"
   }
 }

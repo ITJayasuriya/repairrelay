@@ -39,3 +39,53 @@ it("retains original base, local intent and competing server snapshot", () => {
   expect(conflict.command).toEqual(claim);
   expect(base.owner).toBeNull();
 });
+
+it("resolves against a newer simulator version while retaining dependent notes and the original journal", () => {
+  const note: DemoCommand = {
+    ...claim,
+    id: crypto.randomUUID(),
+    baseVersion: 2,
+    action: { kind: "note", body: "Local diagnosis" },
+  };
+  const journal = [create, claim, note];
+  const base = applyDemoCommand(undefined, create);
+  const server = {
+    ...base,
+    version: 8,
+    fault: "Competing diagnosis",
+    notes: [
+      { id: crypto.randomUUID(), body: "Remote diagnosis", at: create.at },
+    ],
+  };
+  const conflict = demoConflict(journal, claim, server);
+  expect(conflict.local.notes[0]?.body).toBe("Local diagnosis");
+  const resolution: DemoCommand = {
+    ...note,
+    id: crypto.randomUUID(),
+    baseVersion: 3,
+    action: {
+      kind: "resolve",
+      server,
+      choice: "combine",
+      supersedes: [claim.id, note.id],
+    },
+  };
+  const resolved = applyDemoCommand(conflict.local, resolution);
+  expect(resolved.version).toBe(9);
+  expect(resolved.notes.map((n) => n.body)).toEqual([
+    "Remote diagnosis",
+    "Local diagnosis",
+  ]);
+  expect(resolved.owner).toBe("demo-repairer");
+  expect(pendingDemoCommands([...journal, resolution], [create.id])).toEqual([
+    resolution,
+  ]);
+  expect(journal).toHaveLength(3);
+  if (resolution.action.kind !== "resolve") throw new Error("fixture");
+  expect(
+    applyDemoCommand(conflict.local, {
+      ...resolution,
+      action: { ...resolution.action, choice: "server" },
+    }).fault,
+  ).toBe("Competing diagnosis");
+});
