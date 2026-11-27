@@ -1,5 +1,11 @@
-import { useEffect, useState } from "react";
-import { syncDemoCommands, watchDemoPending } from "../../local/demo-sync";
+import { useEffect, useRef, useState } from "react";
+import {
+  resolveDemoConflict,
+  syncDemoCommands,
+  watchDemoPending,
+} from "../../local/demo-sync";
+
+import { practiceDemoConflict } from "../../local/demo-exercise";
 
 export function DemoSync({
   disabled,
@@ -8,6 +14,7 @@ export function DemoSync({
   disabled: boolean;
   setBusy: (busy: boolean) => void;
 }) {
+  const syncButton = useRef<HTMLButtonElement>(null);
   const [pending, setPending] = useState(0);
   const [result, setResult] =
     useState<Awaited<ReturnType<typeof syncDemoCommands>>>();
@@ -20,15 +27,19 @@ export function DemoSync({
     );
     return () => subscription.unsubscribe();
   }, []);
-  async function sync() {
+  async function sync(before?: () => Promise<unknown>) {
     setBusy(true);
     setError("");
     setResult(undefined);
     try {
+      await before?.();
       setResult(await syncDemoCommands());
-    } catch {
+      syncButton.current?.focus();
+    } catch (cause) {
       setError(
-        "Simulated sync stopped. Saved changes remain on this device; retry with the same command identities.",
+        cause instanceof Error
+          ? cause.message
+          : "Simulated sync stopped. Saved changes remain on this device; retry with the same command identities.",
       );
     } finally {
       setBusy(false);
@@ -42,14 +53,23 @@ export function DemoSync({
         does not confirm team ownership.
       </p>
       <p className="count">{pending} changes pending simulated sync</p>
-      <button
-        onClick={() => {
-          if (!disabled && pending > 0) void sync();
-        }}
-        aria-disabled={disabled || pending === 0}
-      >
-        Run simulated sync
-      </button>
+      <div className="actions">
+        <button
+          ref={syncButton}
+          onClick={() => {
+            if (!disabled && pending > 0) void sync();
+          }}
+          aria-disabled={disabled || pending === 0}
+        >
+          Run simulated sync
+        </button>
+        <button
+          disabled={disabled}
+          onClick={() => void sync(practiceDemoConflict)}
+        >
+          Create practice conflict
+        </button>
+      </div>
       <p role="status">
         {result
           ? `${result.acknowledged} changes acknowledged by the simulator. ${result.conflicts.length} tickets need review.`
@@ -64,10 +84,11 @@ export function DemoSync({
         <details key={conflict.command.id}>
           <summary>Review {conflict.local.reference}</summary>
           <p>
-            Dependent changes are paused. Your original notes remain in the
-            ticket and backup. Resolution editing is still in development; no
-            version has been overwritten. Run simulated sync after reload to
-            reopen this review.
+            Dependent changes are paused. Review the entire saved ticket below,
+            including later notes. Choose the simulator ticket, or keep your
+            ticket’s fields and combine both sets of notes. Every original
+            change stays in your backup. A changed simulator version requires
+            another review.
           </p>
           <div className="conflict-values">
             {(
@@ -99,6 +120,28 @@ export function DemoSync({
               </div>
             ))}
           </div>
+          <div className="actions">
+            <button
+              disabled={disabled || !conflict.server}
+              onClick={() =>
+                void sync(() => resolveDemoConflict(conflict, "server"))
+              }
+            >
+              Use simulator ticket
+            </button>
+            <button
+              disabled={disabled || !conflict.server}
+              onClick={() =>
+                void sync(() => resolveDemoConflict(conflict, "combine"))
+              }
+            >
+              Keep my fields and combine notes
+            </button>
+          </div>
+          <p>
+            Choosing the simulator ticket retains this device’s original notes
+            in the journal backup, but removes them from the active ticket.
+          </p>
         </details>
       ))}
     </section>

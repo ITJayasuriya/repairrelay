@@ -112,3 +112,9 @@ competing sync/tabs, combine/select-server and version 2 restore. Chromium axe
 passed; 360px/1280px screenshots inspected. Review simplified backup validation
 using prior command identities and removed duplicate export reads. Next: final
 regressions, publish PR and required Linux all-engine CI, then merge/deploy.
+
+Day 4 final local regression: 11 domain tests and 32 Chromium/WebKit tests pass,
+including injected resolution journal-write rollback and a subsequent queued note.
+Check/build pass. Core commit 387981a; UI/test working tree reviewed. No new
+structural blockers. Open PRs #1/#2/#3/#12 unchanged from prior triage; old setup
+checks do not validate the current product, so no unrelated merge performed.

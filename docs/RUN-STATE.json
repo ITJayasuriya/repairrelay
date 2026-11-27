@@ -4,32 +4,46 @@
   "state": "in_progress",
   "planned_daily_goal": "Day 4: explicit lossless demo conflict resolution with durable competing-device exercise",
   "commit_target": 5,
-  "completed_unit_ids": [],
-  "actual_commit_shas": [],
+  "completed_unit_ids": [
+    "resolution-domain-and-storage",
+    "practice-conflict-ui-and-regressions"
+  ],
+  "actual_commit_shas": ["387981a"],
   "branch": "build/demo-resolution",
   "open_pr": null,
   "last_tested_sha": "b630b2258de541296eaa977b91bff43b6d486b42",
   "actual_test_results": [
     "check passed",
-    "10 domain tests passed",
+    "11 domain tests passed",
     "build passed",
-    "Browser startup blocked by sandbox localhost; authorized retry pending"
+    "32 Chromium/WebKit tests passed",
+    "Chromium axe passed; 360px and 1280px screenshots inspected"
   ],
-  "next_action": "Run actual IndexedDB resolution race/lost-response/restore tests and full Chromium/WebKit suite, review then commit",
-  "dirty_files": ["docs/RUN-STATE.json", "docs/STATUS.md"],
+  "next_action": "Commit reviewed UI/regressions and compatibility documentation, push PR and verify required Linux CI at exact head",
+  "dirty_files": [
+    "src/features/sync/DemoSync.tsx",
+    "src/features/recovery/BackupRestore.tsx",
+    "src/local/demo-exercise.ts",
+    "tests/demo-resolution.spec.ts",
+    "docs/decisions/005-demo-resolution.md",
+    "docs/testing.md",
+    "docs/RUN-STATE.json"
+  ],
   "blocker": null,
-  "updated_at": "2026-11-27T19:51:41.176757+00:00",
-  "merged_pr": "https://github.com/ITJayasuriya/repairrelay/pull/15",
-  "merged_sha": "b630b2258de541296eaa977b91bff43b6d486b42",
-  "deployment": {
-    "url": "https://isuru-repairrelay.pages.dev/demo",
-    "immutable_url": "https://45a2bc07.isuru-repairrelay.pages.dev",
-    "sha": "b630b2258de541296eaa977b91bff43b6d486b42",
-    "status": "deployed once during recovery; production revision and synthetic journey verified"
-  },
-  "ci": {
-    "url": "https://github.com/ITJayasuriya/repairrelay/actions/runs/45887384294",
-    "tested_sha": "f77354e83d375b6820ae1da1aa74d1a1def97c06",
-    "result": "quality passed; 9 domain and 36 Chromium/Firefox/WebKit tests"
+  "updated_at": "2026-11-27T19:53:47.357902+00:00",
+  "previous_delivery": {
+    "merged_pr": "https://github.com/ITJayasuriya/repairrelay/pull/15",
+    "merged_sha": "b630b2258de541296eaa977b91bff43b6d486b42",
+    "deployment": {
+      "url": "https://isuru-repairrelay.pages.dev/demo",
+      "immutable_url": "https://45a2bc07.isuru-repairrelay.pages.dev",
+      "sha": "b630b2258de541296eaa977b91bff43b6d486b42",
+      "status": "deployed once during recovery; production revision and synthetic journey verified"
+    },
+    "ci": {
+      "url": "https://github.com/ITJayasuriya/repairrelay/actions/runs/45887384294",
+      "tested_sha": "f77354e83d375b6820ae1da1aa74d1a1def97c06",
+      "result": "quality passed; 9 domain and 36 Chromium/Firefox/WebKit tests"
+    }
   }
 }
