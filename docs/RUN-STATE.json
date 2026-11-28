@@ -4,21 +4,26 @@
   "state": "in_progress",
   "planned_daily_goal": "Day 5: team event membership schema, canonical permissions and disposable database isolation tests",
   "commit_target": 5,
-  "completed_unit_ids": ["event-membership-schema-and-rls"],
-  "actual_commit_shas": [],
+  "completed_unit_ids": [
+    "event-membership-schema-and-rls",
+    "database-concurrency-and-ci-contract"
+  ],
+  "actual_commit_shas": ["5a5f734"],
   "branch": "build/team-permissions",
   "open_pr": null,
-  "last_tested_sha": "1507fff73c92beac1965016905c1e5cb35126b3d",
+  "last_tested_sha": "5a5f734 plus CI/race working tree",
   "actual_test_results": [
     "check passed",
     "11 domain tests passed",
     "build passed",
-    "local PostgreSQL authorization assertions and concurrent membership race passed"
+    "local PostgreSQL authorization assertions passed",
+    "two-connection membership CAS race passed",
+    "32 Chromium/WebKit browser regressions passed"
   ],
-  "next_action": "Commit reviewed schema and SQL assertions; finish CI integration and run browser regressions outside localhost sandbox",
+  "next_action": "Publish reviewed database foundation PR, inspect exact-head Linux CI, merge normally only when green; no hosted migration or UI deployment",
   "dirty_files": ["docs/RUN-STATE.json", "docs/STATUS.md"],
   "blocker": null,
-  "updated_at": "2026-11-28T20:12:37.451177+00:00",
+  "updated_at": "2026-11-28T20:13:25.844360+00:00",
   "previous_delivery": {
     "merged_pr": "https://github.com/ITJayasuriya/repairrelay/pull/15",
     "merged_sha": "b630b2258de541296eaa977b91bff43b6d486b42",

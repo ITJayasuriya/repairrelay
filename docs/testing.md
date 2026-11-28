@@ -68,3 +68,16 @@ post-resolution dependency ordering and replay/restore of version 2 backups.
 Run `npm run test:e2e:local` on this Mac; Linux CI includes Firefox as well.
 The simulator is not evidence for real Postgres authorization or race behavior.
 Backups with resolution history need this build or later; see decision 005.
+
+## Local team database tests
+
+Start Docker and `npx supabase start` from this repository. On a new local stack,
+startup applies committed migrations; on an existing stack run
+`npx supabase migration up --local`. Then `npm run test:db` executes rolled-back
+SQL authorization assertions plus a two-connection membership race. It targets
+only the fixed `supabase_db_repairrelay` Docker container, accepts no remote URL,
+and requires no hosted credentials. Never substitute a linked/hosted reset.
+The race uses random synthetic identities and removes them in a finally block.
+No pgTAP or extra package is needed; a failed SQL assertion exits nonzero.
+CI starts its own disposable stack and runs the same tests before browser tests.
+These tests cover membership only, not repair command races or team browser sync.

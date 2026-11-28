@@ -158,3 +158,15 @@ role-only comparison cannot detect remove/re-add races; replacing it with an
 event membership version before concurrency verification. No hosted changes.
 Next: rerun migration from scratch locally, concurrent membership CAS regression,
 CI integration, strict review and PR. Team UI and command processing remain next.
+
+Day 5 local verification on 5a5f734 plus CI/race-test working tree: check,
+11 domain tests, build, SQL authorization assertions and two-connection
+membership race pass. All 32 Chromium/WebKit demo regressions pass; the first
+browser launch was blocked by sandbox localhost permissions, then passed with
+authorized execution. Review replaced the role-only stale guard with a separate
+membership version (including remove/re-add regression), uses random race-test
+identities, and keeps owner authority in events alone. No dependencies added.
+Local migration history now records the actually applied migration; hosted
+Supabase remains untouched. Next: required Linux CI and normal reviewed-head
+merge; no frontend deployment needed for database-only groundwork. Remaining
+team command/sync/auth/PWA/export/pilot scope and January 5 deadline unchanged.
