@@ -170,3 +170,8 @@ Local migration history now records the actually applied migration; hosted
 Supabase remains untouched. Next: required Linux CI and normal reviewed-head
 merge; no frontend deployment needed for database-only groundwork. Remaining
 team command/sync/auth/PWA/export/pilot scope and January 5 deadline unchanged.
+
+PR #17 opened at 3398791; initial CI running. Final diff review found the intended
+random fixture edit had not matched formatted source; corrected it and added a
+concurrent create-event retry regression (same UUID, one stored event) before
+merge. Next: retest and push corrected head, then required CI at that head.

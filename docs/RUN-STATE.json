@@ -8,10 +8,13 @@
     "event-membership-schema-and-rls",
     "database-concurrency-and-ci-contract"
   ],
-  "actual_commit_shas": ["5a5f734"],
+  "actual_commit_shas": [
+    "5a5f734a01d00b440be3f7402047b47eaa0d6ffd",
+    "3398791c9f027bed81283c30bbf39c10d0dff843"
+  ],
   "branch": "build/team-permissions",
-  "open_pr": null,
-  "last_tested_sha": "5a5f734 plus CI/race working tree",
+  "open_pr": "https://github.com/ITJayasuriya/repairrelay/pull/17",
+  "last_tested_sha": "3398791c9f027bed81283c30bbf39c10d0dff843",
   "actual_test_results": [
     "check passed",
     "11 domain tests passed",
@@ -20,10 +23,10 @@
     "two-connection membership CAS race passed",
     "32 Chromium/WebKit browser regressions passed"
   ],
-  "next_action": "Publish reviewed database foundation PR, inspect exact-head Linux CI, merge normally only when green; no hosted migration or UI deployment",
+  "next_action": "Test corrected randomized fixtures plus concurrent create-event retry, commit and push PR17, then exact-head CI",
   "dirty_files": ["docs/RUN-STATE.json", "docs/STATUS.md"],
   "blocker": null,
-  "updated_at": "2026-11-28T20:13:25.844360+00:00",
+  "updated_at": "2026-11-28T20:15:43.320778+00:00",
   "previous_delivery": {
     "merged_pr": "https://github.com/ITJayasuriya/repairrelay/pull/15",
     "merged_sha": "b630b2258de541296eaa977b91bff43b6d486b42",

@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { randomUUID } from "node:crypto";
 import { spawn, spawnSync } from "node:child_process";
 
 const args = [
@@ -32,15 +33,26 @@ function concurrent(query) {
     child.stdin.end(query);
   });
 }
-const owner = "30000000-0000-0000-0000-000000000001";
-const member = "30000000-0000-0000-0000-000000000002";
-const event = "40000000-0000-0000-0000-000000000001";
+const owner = randomUUID();
+const member = randomUUID();
+const event = randomUUID();
 try {
   sql(`begin;
     insert into auth.users(id) values ('${owner}'), ('${member}');
-    insert into public.events(id, owner_id, title, event_date, timezone)
-      values ('${event}', '${owner}', 'Synthetic membership race', current_date, 'UTC');
     commit;`);
+  const create = `begin;
+    set local role authenticated;
+    select set_config('request.jwt.claim.sub', '${owner}', true);
+    select public.create_event('${event}', 'Synthetic membership race', current_date, 'UTC');
+    select pg_sleep(0.15);
+    commit;`;
+  const creations = await Promise.all([concurrent(create), concurrent(create)]);
+  assert.ok(creations.every(({ code }) => code === 0));
+  assert.equal(
+    sql(`select count(*) from public.events where id='${event}'`),
+    "1",
+  );
+  console.log("PASS: concurrent create retries allocate exactly one event");
   const command = (role) => `begin;
     set local role authenticated;
     select set_config('request.jwt.claim.sub', '${owner}', true);
