@@ -11,7 +11,7 @@ concurrency:
 jobs:
   quality:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
@@ -22,5 +22,7 @@ jobs:
       - run: npm run check
       - run: npm test
       - run: npm run build
+      - run: npx supabase start
+      - run: npm run test:db
       - run: npx playwright install --with-deps chromium firefox webkit
       - run: npm run test:e2e

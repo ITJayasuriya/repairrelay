@@ -118,3 +118,60 @@ including injected resolution journal-write rollback and a subsequent queued not
 Check/build pass. Core commit 387981a; UI/test working tree reviewed. No new
 structural blockers. Open PRs #1/#2/#3/#12 unchanged from prior triage; old setup
 checks do not validate the current product, so no unrelated merge performed.
+
+Day 4 completed 2026-11-27T19:59:15.145174+00:00. PR #16 reviewed head 663fce0 passed required
+Linux CI 46059910665: 11 domain tests and 48 browser tests across Chromium,
+Firefox and WebKit. Normal SHA-bound squash merge: 1507fff73c92beac1965016905c1e5cb35126b3d.
+Source commits 387981a, 8c9a713, 663fce0: three meaningful commits against target
+five; daily feature complete without padding commits. Main check, eleven domain
+tests and build passed. Deployed once https://23f59485.isuru-repairrelay.pages.dev;
+production https://isuru-repairrelay.pages.dev/demo serves revision 1507fff.
+Actual Chromium production practice conflict/full dependent review/offline
+combine/focus/reload/version 2 backup/fresh-profile restore/manual re-review
+passed with both notes retained exactly once. A fresh simulator may need another
+explicit review after restore because simulator authority/receipts are separate
+from the backup; this was exercised successfully. Only Pages requests observed.
+360px/1280px production screenshots inspected. Pre-deploy existing b630b22 intake,
+claim and refresh passed after correcting the verification script's button label;
+initial script timeout was not a product defect. No hosted database mutation,
+new dependency, paid resource or quota-related lost delivery time. Review removed
+duplicate export reads/repeated backup scans and fixed stale-review/dependent-note
+visibility. Codex labels were unavailable. Local Firefox remains unrun; Linux
+Firefox passed. Version 2 profiles require this build or later; see decision 005.
+
+Next: canonical permission matrix, event/member schema and command RPC contracts
+using disposable local Supabase; test cross-event isolation and races before team
+integration. Remaining v1 includes organiser membership, OAuth/account-switch
+recovery, server authorization/hash idempotency/atomic ticket+claim/cursor+tombstone,
+team outbox and real DB reconnection/lost-response tests, PWA/storage/update safety,
+ORDS mapping/export, close-event checklist, device/a11y/load and release verification.
+Pilot/organiser validation (#4) remains unavailable and is not fabricated.
+The January 5 deadline remains unchanged; this is not full v1 or team mode.
+Final post-merge evidence stays locally modified for the next meaningful work.
+
+29 November — Day 5 in progress on build/team-permissions; random target five.
+Added event/member migration and server-only creation/membership RPCs, with
+read-only client grants and nonrecursive member RLS. Initial local SQL test
+caught a PostgreSQL CURRENT_ROLE identifier collision; renamed the variable.
+Authorization tests now pass on disposable local PostgreSQL. Review then found
+role-only comparison cannot detect remove/re-add races; replacing it with an
+event membership version before concurrency verification. No hosted changes.
+Next: rerun migration from scratch locally, concurrent membership CAS regression,
+CI integration, strict review and PR. Team UI and command processing remain next.
+
+Day 5 local verification on 5a5f734 plus CI/race-test working tree: check,
+11 domain tests, build, SQL authorization assertions and two-connection
+membership race pass. All 32 Chromium/WebKit demo regressions pass; the first
+browser launch was blocked by sandbox localhost permissions, then passed with
+authorized execution. Review replaced the role-only stale guard with a separate
+membership version (including remove/re-add regression), uses random race-test
+identities, and keeps owner authority in events alone. No dependencies added.
+Local migration history now records the actually applied migration; hosted
+Supabase remains untouched. Next: required Linux CI and normal reviewed-head
+merge; no frontend deployment needed for database-only groundwork. Remaining
+team command/sync/auth/PWA/export/pilot scope and January 5 deadline unchanged.
+
+PR #17 opened at 3398791; initial CI running. Final diff review found the intended
+random fixture edit had not matched formatted source; corrected it and added a
+concurrent create-event retry regression (same UUID, one stored event) before
+merge. Next: retest and push corrected head, then required CI at that head.

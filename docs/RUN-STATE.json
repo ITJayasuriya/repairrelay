@@ -1,36 +1,32 @@
 {
   "schema_version": 1,
-  "local_date": "2026-11-28",
+  "local_date": "2026-11-29",
   "state": "in_progress",
-  "planned_daily_goal": "Day 4: explicit lossless demo conflict resolution with durable competing-device exercise",
+  "planned_daily_goal": "Day 5: team event membership schema, canonical permissions and disposable database isolation tests",
   "commit_target": 5,
   "completed_unit_ids": [
-    "resolution-domain-and-storage",
-    "practice-conflict-ui-and-regressions"
+    "event-membership-schema-and-rls",
+    "database-concurrency-and-ci-contract"
   ],
-  "actual_commit_shas": ["387981a"],
-  "branch": "build/demo-resolution",
-  "open_pr": null,
-  "last_tested_sha": "b630b2258de541296eaa977b91bff43b6d486b42",
+  "actual_commit_shas": [
+    "5a5f734a01d00b440be3f7402047b47eaa0d6ffd",
+    "3398791c9f027bed81283c30bbf39c10d0dff843"
+  ],
+  "branch": "build/team-permissions",
+  "open_pr": "https://github.com/ITJayasuriya/repairrelay/pull/17",
+  "last_tested_sha": "3398791c9f027bed81283c30bbf39c10d0dff843",
   "actual_test_results": [
     "check passed",
     "11 domain tests passed",
     "build passed",
-    "32 Chromium/WebKit tests passed",
-    "Chromium axe passed; 360px and 1280px screenshots inspected"
+    "local PostgreSQL authorization assertions passed",
+    "two-connection membership CAS race passed",
+    "32 Chromium/WebKit browser regressions passed"
   ],
-  "next_action": "Commit reviewed UI/regressions and compatibility documentation, push PR and verify required Linux CI at exact head",
-  "dirty_files": [
-    "src/features/sync/DemoSync.tsx",
-    "src/features/recovery/BackupRestore.tsx",
-    "src/local/demo-exercise.ts",
-    "tests/demo-resolution.spec.ts",
-    "docs/decisions/005-demo-resolution.md",
-    "docs/testing.md",
-    "docs/RUN-STATE.json"
-  ],
+  "next_action": "Test corrected randomized fixtures plus concurrent create-event retry, commit and push PR17, then exact-head CI",
+  "dirty_files": ["docs/RUN-STATE.json", "docs/STATUS.md"],
   "blocker": null,
-  "updated_at": "2026-11-27T19:53:47.357902+00:00",
+  "updated_at": "2026-11-28T20:15:43.320778+00:00",
   "previous_delivery": {
     "merged_pr": "https://github.com/ITJayasuriya/repairrelay/pull/15",
     "merged_sha": "b630b2258de541296eaa977b91bff43b6d486b42",
@@ -45,5 +41,18 @@
       "tested_sha": "f77354e83d375b6820ae1da1aa74d1a1def97c06",
       "result": "quality passed; 9 domain and 36 Chromium/Firefox/WebKit tests"
     }
+  },
+  "ci": {
+    "url": "https://github.com/ITJayasuriya/repairrelay/actions/runs/46059910665",
+    "tested_sha": "663fce0a700ea698874c1d0756c4cb084109801a",
+    "result": "quality passed; 11 domain tests and 48 Chromium/Firefox/WebKit tests"
+  },
+  "merged_pr": "https://github.com/ITJayasuriya/repairrelay/pull/16",
+  "merged_sha": "1507fff73c92beac1965016905c1e5cb35126b3d",
+  "deployment": {
+    "url": "https://isuru-repairrelay.pages.dev/demo",
+    "immutable_url": "https://23f59485.isuru-repairrelay.pages.dev",
+    "sha": "1507fff73c92beac1965016905c1e5cb35126b3d",
+    "status": "deployed once; production revision and conflict/offline/backup/fresh-profile recovery verified"
   }
 }
